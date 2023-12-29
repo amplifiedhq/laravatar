@@ -4,17 +4,18 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/martian/laravatar.svg?style=flat-square)](https://packagist.org/packages/martian/laravatar)
 ![GitHub Actions](https://github.com/amplifiedhq/laravatar/actions/workflows/main.yml/badge.svg)
 
-🚀 A lightweight and easy-to-use Laravel package that add avatars to your models using [Gravatar](https://gravatar.com), [DiceBear](https://www.dicebear.com/), [UI Avatars](https://ui-avatars.com/) or [Boring Avatar](https://boringavatars.com/)
+🚀 A lightweight and easy-to-use Laravel package designed to simplify avatar generation for your Eloquent models. It provides a flexible and extensible solution for generating avatars using [Gravatar](https://gravatar.com), [DiceBear](https://www.dicebear.com/), [UI Avatars](https://ui-avatars.com/) or [Boring Avatar](https://boringavatars.com/)
 
 ## Supported Avatar Drivers
 | Driver | Description | Supported | Link |
 | --- | --- | --- | --- |
-| Gravatar | Gravatar is a service for providing globally unique avatars. | Yes | [Gravatar](https://gravatar.com) |
-| DiceBear | DiceBear is an avatar library for designers and developers. | Yes | [DiceBear](https://www.dicebear.com/) |
-| UI Avatars | UI Avatars is an avatar library for designers and developers. | Yes | [UI Avatars](https://ui-avatars.com/) |
-| Boring Avatar | Boring avatars is a tiny JavaScript React library that generates custom, SVG-based, round avatars from any username and color palette. | Yes | [Boring Avatar](https://boringavatars.com/) |
+| Gravatar | Gravatar is a service for providing globally unique avatars. | Yes ✅️ | [Gravatar](https://gravatar.com) |
+| DiceBear | DiceBear is an avatar library for designers and developers. | Yes ✅️ | [DiceBear](https://www.dicebear.com/) |
+| UI Avatars | UI Avatars is an avatar library for designers and developers. | Yes ✅️ | [UI Avatars](https://ui-avatars.com/) |
+| Boring Avatar | Boring avatars is a tiny JavaScript React library that generates custom, SVG-based, round avatars from any username and color palette. | Yes ✅️ | [Boring Avatar](https://boringavatars.com/) |
 
 > Note: You can also add your own custom driver by implementing the `AmplifiedHQ\Laravatar\Contracts\AvatarInterface;` interface and extending the `AmplifiedHQ\Laravatar\Abstracts\BaseAvatar` class. 
+
 
 
 ## Installation
@@ -22,7 +23,7 @@
 You can install the package via composer:
 
 ```bash
-composer require amplifiedhq/laravatar
+composer require martian/laravatar
 ```
 
 ## Register Service Provider
@@ -65,6 +66,8 @@ You can configure the package by editing the `config/laravatar.php` file.
 ## Usage
 In order to use the package in your model to generate an avatar on the fly, you need to add the `AmplifiedHQ\Laravatar\Traits\HasAvatar` trait to your model.
 
+### Using the `HasAvatar` trait
+
 ```php
 
 namespace App\Models;
@@ -93,7 +96,89 @@ class User extends Authenticatable
 > If you are using the `gravater` driver, you need to use the email column as the avatar column. If you are using the `dicebear` or `ui-avatars` or `boringavatar` driver, you can use any column as the avatar column, provided that the column is a string column. (e.g. `name`, `email`, `username` etc.)
 
 > Note: The `HasAvatar` trait requires you to define the `$avatarColumn` and `$avatarStorageColumn` properties in your model. The `$avatarColumn` property is the column that will be used to generate the avatar. The `$avatarStorageColumn` property is the column that will be used to store the avatar.
-> *WARNING*
+
+### Using the Driver Methods
+You can also use each driver method directly on your application either on on your controller, model or view.
+
+#### Gravatar
+```php
+
+use AmplifiedHQ\Laravatar\Drivers\Gravatar;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller {
+
+    public function generateAvatar()
+    {
+        $gravatar = new Gravatar('jane@example.com');
+        $gravatar->setSize(100);
+        $gravatar->getUrl(); // https://www.gravatar.com/avatar/9e26471d35a78862c17e467d87cddedf?size=100
+    }
+}
+
+```
+
+#### DiceBear
+```php
+
+use AmplifiedHQ\Laravatar\Drivers\DiceBear;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller {
+
+    public function generateAvatar()
+    {
+        $dicebear = new DiceBear('Jane Doe');
+        $dicebear->setStyle('lorelei');
+        $dicebear->setSize(100);
+        $dicebear->setFormat('svg');
+        $dicebear->getUrl(); // https://api.dicebear.com/7.x/lorelei/svg?seed=Jane%20Doe&size=100
+    }
+}
+```
+
+#### Boring Avatar
+```php
+
+use AmplifiedHQ\Laravatar\Drivers\BoringAvatar;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller {
+
+    public function generateAvatar()
+    {
+        $boringAvatar = new BoringAvatar('Jane Doe');
+        $boringAvatar->setSize(100);
+        $boringAvatar->setFormat('svg');
+        $boringAvatar->setVariant('marble');
+        $boringAvatar->setSquare(true);
+        $boringAvatar->getUrl(); // https://boring-avatars-api.vercel.app/api/avatar?size=100&variant=marble&name=Jane%20Doe&sqaure=1
+    }
+}
+
+```
+
+#### UI Avatars
+```php
+
+use AmplifiedHQ\Laravatar\Drivers\UiAvatars;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller {
+
+    public function generateAvatar()
+    {
+        $uiAvatars = new UiAvatars('Jane Doe');
+        $uiAvatars->setSize(100);
+        $uiAvatars->setFormat('svg');
+        $uiAvatars->setBackgroundColor('000000'); // Hexadecimal
+        $uiAvatars->setForegroundColor('ffffff'); // Hexadecimal
+        $uiAvatars->setRounded(true);
+        $uiAvatars->getUrl(); // https://ui-avatars.com/api/?name=Jane%20Doe&size=100&background=000000&color=ffffff&rounded=true
+    }
+}
+    
+```
 
 ### Testing
 
