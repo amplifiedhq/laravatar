@@ -14,7 +14,8 @@
 | UI Avatars | UI Avatars is an avatar library for designers and developers. | Yes ✅️ | [UI Avatars](https://ui-avatars.com/) |
 | Boring Avatar | Boring avatars is a tiny JavaScript React library that generates custom, SVG-based, round avatars from any username and color palette. | Yes ✅️ | [Boring Avatar](https://boringavatars.com/) |
 
-> Note: You can also add your own custom driver by implementing the `AmplifiedHQ\Laravatar\Contracts\AvatarInterface;` interface and extending the `AmplifiedHQ\Laravatar\Abstracts\BaseAvatar` class. 
+> [!NOTE]
+> You can also add your own custom driver by implementing the `AmplifiedHQ\Laravatar\Contracts\AvatarInterface;` interface and extending the `AmplifiedHQ\Laravatar\Abstracts\BaseAvatar` class. 
 
 
 
@@ -95,7 +96,8 @@ class User extends Authenticatable
 > [!IMPORTANT]
 > If you are using the `gravater` driver, you need to use the email column as the avatar column. If you are using the `dicebear` or `ui-avatars` or `boringavatar` driver, you can use any column as the avatar column, provided that the column is a string column. (e.g. `name`, `email`, `username` etc.)
 
-> Note: The `HasAvatar` trait requires you to define the `$avatarColumn` and `$avatarStorageColumn` properties in your model. The `$avatarColumn` property is the column that will be used to generate the avatar. The `$avatarStorageColumn` property is the column that will be used to store the avatar.
+> [!WARNING]
+> The `HasAvatar` trait requires you to define the `$avatarColumn` and `$avatarStorageColumn` properties in your model. The `$avatarColumn` property is the column that will be used to generate the avatar. The `$avatarStorageColumn` property is the column that will be used to store the avatar.
 
 ### Using the Driver Methods
 You can also use each driver method directly on your application either on on your controller, model or view.
