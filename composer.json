@@ -40,8 +40,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^8.18",
-        "pestphp/pest": "^1.23",
-        "pestphp/pest-plugin-laravel": "^1.4",
+        "pestphp/pest": "*",
+        "pestphp/pest-plugin-laravel": "*",
         "phpunit/phpunit": "^9.0"
     },
     "autoload": {
@@ -58,8 +58,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage"
 
     },
     "config": {
