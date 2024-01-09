@@ -9,8 +9,16 @@ jobs:
             fail-fast: true
             matrix:
                 os: [ubuntu-latest, windows-latest]
-                php: [8.0, 7.4]
-                stability: [prefer-lowest, prefer-stable]
+                php: [8.3, 8.2, 8.1, 8.0]
+                laravel: [10.*, 9.*]
+                dependency-version: [prefer-lowest, prefer-stable]
+                include:
+                  - laravel: 10.*
+                    testbench: ^8.0
+                  - laravel: 9.*
+                    testbench: ^7.0
+                  - laravel: 8.*
+                    testbench: ^6.23
 
         name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -32,5 +40,10 @@ jobs:
             - name: Install dependencies
               run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+            - name: Install dependencies
+              run: |
+                composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                
             - name: Execute tests
               run: vendor/bin/pest
