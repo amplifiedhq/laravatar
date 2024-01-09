@@ -94,7 +94,7 @@ class User extends Authenticatable
 ```
 
 > [!IMPORTANT]
-> If you are using the `gravater` driver, you need to use the email column as the avatar column. If you are using the `dicebear` or `ui-avatars` or `boringavatar` driver, you can use any column as the avatar column, provided that the column is a string column. (e.g. `name`, `email`, `username` etc.)
+> If you are using the `gravatar` driver, you need to use the email column as the avatar column. If you are using the `dicebear` or `ui-avatars` or `boringavatar` driver, you can use any column as the avatar column, provided that the column is a string column. (e.g. `name`, `email`, `username` etc.)
 
 > [!WARNING]
 > The `HasAvatar` trait requires you to define the `$avatarColumn` and `$avatarStorageColumn` properties in your model. The `$avatarColumn` property is the column that will be used to generate the avatar. The `$avatarStorageColumn` property is the column that will be used to store the avatar.
